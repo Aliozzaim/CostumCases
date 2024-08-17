@@ -45,14 +45,18 @@ function ReviewColumn({
   const duration = `${columnHeight * msPerPixel}ms`
 
   useEffect(() => {
+    // if the columnRef is not set, return
     if (!columnRef.current) return
 
+    // create a new ResizeObserver
+    // this observer will call the setColumnHeight function whenever the columnRef changes
+    // this will update the height of the column and the duration of the marquee animation
     const resizeObserver = new window.ResizeObserver(() => {
       setColumnHeight(columnRef.current?.offsetHeight ?? 0)
     })
 
     resizeObserver.observe(columnRef.current)
-
+    //this is a cleanup function
     return () => {
       resizeObserver.disconnect()
     }
